@@ -1,22 +1,34 @@
 package com.demo.todo.entities;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 
 import com.demo.todo.validators.CustomBooleanDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "todos")
 public class Todo {
 
-    private @Id @GeneratedValue Long id;
+    @Id
+    @SequenceGenerator(name = "todo_seq", sequenceName = "todo_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "todo_seq")
+    private Long id;
 
     @NotNull(message = "Text is required")
     @NotBlank(message = "Text cannot be blank")
@@ -26,42 +38,13 @@ public class Todo {
     @JsonDeserialize(using = CustomBooleanDeserializer.class)
     private boolean completed;
 
-    // needed by JPA
-    protected Todo() {
-    };
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    User user;
 
     public Todo(String text) {
         this.text = text;
         this.completed = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    public boolean getCompleted() {
-        return completed;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", text='" + getText() + "'" +
-                ", completed='" + getCompleted() + "'" +
-                "}";
     }
 
 }

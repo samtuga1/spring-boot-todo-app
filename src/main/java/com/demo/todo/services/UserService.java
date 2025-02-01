@@ -14,6 +14,10 @@ public class UserService {
         userRepo = repository;
     }
 
+    public User findById(Long id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
     public User create(String name) {
         return userRepo.save(new User(name));
     }

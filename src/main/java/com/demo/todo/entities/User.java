@@ -16,10 +16,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "users")
-@SequenceGenerator(sequenceName = "users_seq", name = "user_seq", allocationSize = 1)
 public class User {
 
     @Id
+    @SequenceGenerator(sequenceName = "user_seq", name = "user_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     private Long id;
 
@@ -28,31 +28,8 @@ public class User {
     @NotNull(message = "Name is required")
     private String name;
 
-    // protected User() {
-    // }
-
     public User(String name) {
         this.name = name;
     }
-
-    // public Long getId() {
-    // return id;
-    // }
-
-    // public String getName() {
-    // return name;
-    // }
-
-    // public void setName(String name) {
-    // this.name = name;
-    // }
-
-    // @Override
-    // public String toString() {
-    // return "{" +
-    // " id='" + getId() + "'" +
-    // ", name='" + getName() + "'" +
-    // "}";
-    // }
 
 }
