@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TodoApplication {
 
 	public static void main(String[] args) {
+		// new AnnotationConfigApplicationContext(AppContext.class);
 		SpringApplication.run(TodoApplication.class, args);
 	}
 

@@ -1,8 +1,10 @@
 package com.demo.todo.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.demo.todo.entities.User;
-import com.demo.todo.interfaces.CustomUserRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<User, Long>, CustomUserRepository {
+import com.demo.todo.entities.User;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 }

@@ -14,11 +14,16 @@ public class UserService {
         userRepo = repository;
     }
 
-    User create(String name) {
+    public User create(String name) {
         return userRepo.save(new User(name));
     }
 
-    User updateName(String name, Long userId) {
-        return userRepo.updateName(name, userId);
+    public User updateName(String name, Long userId) {
+        User maybeUser = userRepo.findById(userId).orElse(null);
+        if (maybeUser == null)
+            return null;
+        User user = maybeUser;
+        user.setName(name);
+        return userRepo.save(user);
     }
 }

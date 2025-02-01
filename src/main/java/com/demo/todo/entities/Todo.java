@@ -1,24 +1,29 @@
 package com.demo.todo.entities;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
+
+import com.demo.todo.validators.CustomBooleanDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "todos")
 public class Todo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private @Id @GeneratedValue Long id;
 
+    @NotNull(message = "Text is required")
+    @NotBlank(message = "Text cannot be blank")
     @Column(nullable = false)
     private String text;
 
+    @JsonDeserialize(using = CustomBooleanDeserializer.class)
     private boolean completed;
 
     // needed by JPA

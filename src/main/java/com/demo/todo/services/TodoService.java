@@ -17,11 +17,21 @@ public class TodoService {
         return todoRepo.save(new Todo(text));
     }
 
-    void complete(Long todoId) {
-        todoRepo.markComplete(todoId);
+    public Todo complete(Long todoId) {
+        Todo todo = todoRepo.findById(todoId).orElse(null);
+        if (todo != null) {
+            todo.setCompleted(true);
+            return todoRepo.save(todo);
+        }
+        return null;
     }
 
-    void unComplete(Long todoId) {
-        todoRepo.markUnComplete(todoId);
+    public Todo unComplete(Long todoId) {
+        Todo todo = todoRepo.findById(todoId).orElse(null);
+        if (todo != null) {
+            todo.setCompleted(false);
+            return todoRepo.save(todo);
+        }
+        return null;
     }
 }
