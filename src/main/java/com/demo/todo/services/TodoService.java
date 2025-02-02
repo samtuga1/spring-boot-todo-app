@@ -1,5 +1,6 @@
 package com.demo.todo.services;
 
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 
 import com.demo.todo.entities.Todo;
@@ -13,8 +14,12 @@ public class TodoService {
         this.todoRepo = repository;
     }
 
-    Todo create(String text) {
-        return todoRepo.save(new Todo(text));
+    public Todo create(Todo todo) {
+        return todoRepo.save(todo);
+    }
+
+    public Todo findById(Long id) {
+        return todoRepo.findById(id).orElse(null);
     }
 
     public Todo complete(Long todoId) {
@@ -33,5 +38,9 @@ public class TodoService {
             return todoRepo.save(todo);
         }
         return null;
+    }
+
+    public Collection<Todo> fetchAll(Long userId) {
+        return todoRepo.findByUserId(userId);
     }
 }

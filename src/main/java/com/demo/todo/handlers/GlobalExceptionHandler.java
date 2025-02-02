@@ -3,8 +3,6 @@ package com.demo.todo.handlers;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,8 +26,6 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
-
-        // return ResponseEntity.badRequest().body(errors);
+        return ResponseEntity.badRequest().body(errors);
     }
 }
